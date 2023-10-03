@@ -56,4 +56,11 @@ public class App {
                 conta.depositar(valorDeposito);
                 break;
 
+            case 4:
+                System.out.print("\nValor a sacar: R$");
+                double valorSaque = scanner.nextDouble();
+                conta.sacar(valorSaque);
+                break;
+
+
 }
