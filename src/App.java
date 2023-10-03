@@ -18,4 +18,20 @@ public class App {
         Cliente cliente = new Cliente(nome, cpf, dataNascimento, endereco);
         Conta conta = new Conta("001", "001", 0, cliente);
     }
+
+    while (true) {
+        System.out.println("\n//-- Banco Maut --//");
+        System.out.println("Escolha uma operação:");
+        System.out.println("1 - Exibir informações");
+        System.out.println("2 - Ver Saldo");
+        System.out.println("3 - Depositar");
+        System.out.println("4 - Sacar");
+        System.out.println("5 - Transferir");
+        System.out.println("6 - Exibir Extrato");
+        System.out.println("7 - Alterar Dados");
+        System.out.println("8 - Sair");
+        System.out.print("\nOpção: ");
+        int opcao = scanner.nextInt();
+        scanner.nextLine(); // Limpa a quebra de linha
+    
 }
