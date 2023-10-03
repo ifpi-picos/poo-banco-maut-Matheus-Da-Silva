@@ -33,5 +33,16 @@ public class App {
         System.out.print("\nOpção: ");
         int opcao = scanner.nextInt();
         scanner.nextLine(); // Limpa a quebra de linha
-    
+        
+        switch (opcao) {
+            case 1:
+                System.out.println("\nInformações do Cliente e da Conta:");
+                System.out.println("Nome: " + cliente.getNome());
+                System.out.println("CPF: " + cliente.getCPF());
+                System.out.println("Data de Nascimento: " + cliente.getDataNascimento());
+                System.out.println("Endereço: " + cliente.getEndereco());
+                System.out.println("Número da Agência: " + conta.getNumeroAgencia());
+                System.out.println("Número da Conta: " + conta.getNumeroConta());
+                System.out.println("Saldo: R$" + conta.getSaldo());
+                break;
 }
