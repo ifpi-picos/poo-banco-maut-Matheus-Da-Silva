@@ -47,7 +47,13 @@ public class App {
                 break;
 
             case 2:
-            System.out.println("\nSaldo: R$" + conta.getSaldo());
-            break;
+                System.out.println("\nSaldo: R$" + conta.getSaldo());
+                break;
+
+            case 3:
+                System.out.print("\nValor a depositar: R$");
+                double valorDeposito = scanner.nextDouble();
+                conta.depositar(valorDeposito);
+                break;
 
 }
