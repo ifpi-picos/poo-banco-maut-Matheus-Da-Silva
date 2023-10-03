@@ -2,9 +2,9 @@
 
 Atividade da Disciplina de 'Programação Orientada à Objetos' para implementar um sistema bancário com o fito de aprimorar e usar os conceitos de POO na prática.
 
-Curso Superior de Análise e Desenvolvimento de Sistemas - Módulo II
-Aluno: Matheus da Silva
-Professor: Jesiael Viana
+- Curso Superior de Análise e Desenvolvimento de Sistemas - Módulo II
+- Aluno: Matheus da Silva
+- Professor: Jesiel Viana
 
 # Banco Maut
 ## - Parte 1
