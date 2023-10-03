@@ -50,19 +50,22 @@ public class App {
                     break;
 
                 case 3:
-                    System.out.print("\nValor a depositar: R$");
+                    System.out.println("\n//-- Depósito --//");
+                    System.out.print("Valor a depositar: R$");
                     double valorDeposito = scanner.nextDouble();
                     conta.depositar(valorDeposito);
                     break;
 
                 case 4:
-                    System.out.print("\nValor a sacar: R$");
+                    System.out.println("\n//-- Saque --//");
+                    System.out.print("Valor a sacar: R$");
                     double valorSaque = scanner.nextDouble();
                     conta.sacar(valorSaque);
                     break;
 
                 case 5:
-                    System.out.print("\nNúmero da Agência de Destino: ");
+                    System.out.println("\n//-- Transferência --//");
+                    System.out.print("Número da Agência de Destino: ");
                     String numeroAgenciaDestino = scanner.nextLine();
                     System.out.print("Número da Conta de Destino: ");
                     String numeroContaDestino = scanner.nextLine();
@@ -82,7 +85,8 @@ public class App {
                     break;
 
                 case 7:
-                    System.out.print("\nNovo Nome: ");
+                    System.out.println("\n//-- Alterar Dados --//");
+                    System.out.print("Novo Nome: ");
                     String novoNome = scanner.nextLine();
                     cliente.setNome(novoNome);
                     System.out.print("Nova Data de Nascimento: ");
