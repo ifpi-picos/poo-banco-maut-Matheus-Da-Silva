@@ -12,6 +12,7 @@ public class Conta {
         this.numeroConta = numeroConta;
         this.saldo = saldo;
         this.cliente = cliente;
+        cliente.adicionarConta(this); // Associa a conta ao cliente
         this.transacao = new Transacao(); // Inicialize o objeto de transação
     }    
     public Conta(String numeroAgenciaDestino, String numeroContaDestino) {
