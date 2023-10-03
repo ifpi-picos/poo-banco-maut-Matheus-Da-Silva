@@ -82,6 +82,27 @@ public class App {
                 }
                 break;
 
+            case 7:
+                System.out.print("\nNovo Nome: ");
+                String novoNome = scanner.nextLine();
+                cliente.setNome(novoNome);
+                System.out.print("Nova Data de Nascimento: ");
+                String novoDataNasc = scanner.nextLine();
+                cliente.setDataNascimento(novoDataNasc);
+                System.out.print("Novo Endereço: ");
+                String novoEndereco = scanner.nextLine();
+                cliente.setEndereco(novoEndereco);
+                System.out.println("Informações atualizadas com sucesso.");
+                break;
+
+            case 8:
+                System.out.println("Até logo!");
+                System.exit(0);
+                scanner.close();
+                break;
+            default:
+                System.out.println("Opção inválida. Tente novamente.");
+
 
 
 }
