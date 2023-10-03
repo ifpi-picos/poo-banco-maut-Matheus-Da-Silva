@@ -75,5 +75,13 @@ public class App {
                 conta.transferir(destino, valorTransferencia);
                 break;
 
+            case 6:
+                System.out.println("\nExtrato de Transações:");
+                for (String transacao : conta.obterTransacoes()) {
+                    System.out.println(transacao);
+                }
+                break;
+
+
 
 }
