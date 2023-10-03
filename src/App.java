@@ -61,6 +61,19 @@ public class App {
                 double valorSaque = scanner.nextDouble();
                 conta.sacar(valorSaque);
                 break;
+                
+            case 5:
+                System.out.print("\nNúmero da Agência de Destino: ");
+                String numeroAgenciaDestino = scanner.nextLine();
+                System.out.print("Número da Conta de Destino: ");
+                String numeroContaDestino = scanner.nextLine();
+                
+                Conta destino = new Conta(numeroAgenciaDestino, numeroContaDestino);
+            
+                System.out.print("Valor a transferir: R$");
+                double valorTransferencia = scanner.nextDouble();
+                conta.transferir(destino, valorTransferencia);
+                break;
 
 
 }
