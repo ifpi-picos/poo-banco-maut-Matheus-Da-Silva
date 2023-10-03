@@ -45,4 +45,9 @@ public class App {
                 System.out.println("Número da Conta: " + conta.getNumeroConta());
                 System.out.println("Saldo: R$" + conta.getSaldo());
                 break;
+
+            case 2:
+            System.out.println("\nSaldo: R$" + conta.getSaldo());
+            break;
+
 }
