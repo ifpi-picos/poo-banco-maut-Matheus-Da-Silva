@@ -1,4 +1,6 @@
 import java.util.List;
+import java.util.Date;
+import java.text.SimpleDateFormat;
 
 public class Conta {
     private String numeroAgencia;
@@ -15,6 +17,16 @@ public class Conta {
         cliente.adicionarConta(this); // Associa a conta ao cliente
         this.transacao = new Transacao(); // Inicialize o objeto de transação
     }    
+
+    // Obtém a data e hora atuais
+    Date dataHoraAtual = new Date();
+
+    // Define o formato desejado para a data e hora
+    SimpleDateFormat formato = new SimpleDateFormat("HH:mm - dd/MM/yyyy");
+
+    // Formata a data e hora em uma string
+    String dataHoraFormatada = formato.format(dataHoraAtual);
+    
     public Conta(String numeroAgenciaDestino, String numeroContaDestino) {
         this.transacao = new Transacao();
     }
@@ -38,7 +50,7 @@ public class Conta {
     // Método para depositar dinheiro na conta
     public void depositar(double valor){
         saldo += valor;
-        transacao.adicionarTransacao("Depósito de R$" + valor);
+        transacao.adicionarTransacao("Depósito de R$" + valor + " às " + dataHoraFormatada);
         System.out.println("Depósito concluído com êxito");
     }
 
@@ -46,7 +58,7 @@ public class Conta {
     public void sacar(double valor){
         if (valor <= saldo){
             saldo -= valor;
-            transacao.adicionarTransacao("Saque de R$" + valor);
+            transacao.adicionarTransacao("Saque de R$" + valor + " às " + dataHoraFormatada);
             System.out.println("Saque concluído com êxito");
         } else {
             System.out.println("Saldo insuficiente");
@@ -58,7 +70,7 @@ public class Conta {
         if (valor <= saldo){
             saldo -= valor;
             destino.depositar(valor);
-            transacao.adicionarTransacao("Transferência de R$" + valor);
+            transacao.adicionarTransacao("Transferência de R$" + valor + " às " + dataHoraFormatada);
             System.out.println("Transferência concluída com êxito");
         } else {
             System.out.println("Saldo insuficiente");
