@@ -3,13 +3,13 @@ import java.util.Date;
 import java.text.SimpleDateFormat;
 
 public class Conta {
-    private String numeroAgencia;
-    private String numeroConta;
+    private int numeroAgencia;
+    private int numeroConta;
     private double saldo;
     private Cliente cliente; // Uma conta só pode ter um cliente associado
     private Transacao transacao;
 
-    public Conta(String numeroAgencia, String numeroConta, double saldo, Cliente cliente){
+    public Conta(int numeroAgencia, int numeroConta, double saldo, Cliente cliente){
         this.numeroAgencia = numeroAgencia;
         this.numeroConta = numeroConta;
         this.saldo = saldo;
@@ -17,25 +17,23 @@ public class Conta {
         cliente.adicionarConta(this); // Associa a conta ao cliente
         this.transacao = new Transacao(); // Inicialize o objeto de transação
     }    
-
-    // Obtém a data e hora atuais
-    Date dataHoraAtual = new Date();
-
-    // Define o formato desejado para a data e hora
-    SimpleDateFormat formato = new SimpleDateFormat("HH:mm - dd/MM/yyyy");
-
-    // Formata a data e hora em uma string
-    String dataHoraFormatada = formato.format(dataHoraAtual);
+    
+    // Método privado para obter a data e hora formatada
+    private String obterDataHoraFormatada() {
+        Date dataHoraAtual = new Date();
+        SimpleDateFormat formato = new SimpleDateFormat("HH:mm - dd/MM/yyyy");
+        return formato.format(dataHoraAtual);
+    }
     
     public Conta(String numeroAgenciaDestino, String numeroContaDestino) {
         this.transacao = new Transacao();
     }
 
-    public String getNumeroAgencia() {
+    public int getNumeroAgencia() {
         return numeroAgencia;
     }
 
-    public String getNumeroConta() {
+    public int getNumeroConta() {
         return numeroConta;
     }
 
@@ -48,21 +46,23 @@ public class Conta {
     }
 
     // Método para depositar dinheiro na conta
-    public void depositar(double valor){
+    public boolean depositar(double valor){
         saldo += valor;
-        transacao.adicionarTransacao("Depósito de R$" + valor + " às " + dataHoraFormatada);
+        transacao.adicionarTransacao("Depósito", valor, obterDataHoraFormatada());
         System.out.println("Depósito concluído com êxito");
+        return false;
     }
 
     // Método para sacar dinheiro da conta
-    public void sacar(double valor){
+    public double sacar(double valor){
         if (valor <= saldo){
             saldo -= valor;
-            transacao.adicionarTransacao("Saque de R$" + valor + " às " + dataHoraFormatada);
+            transacao.adicionarTransacao("Saque", valor, obterDataHoraFormatada());
             System.out.println("Saque concluído com êxito");
         } else {
             System.out.println("Saldo insuficiente");
         }
+        return valor;
     }
 
     // Método para transferir dinheiro para outra conta
@@ -70,7 +70,7 @@ public class Conta {
         if (valor <= saldo){
             saldo -= valor;
             destino.depositar(valor);
-            transacao.adicionarTransacao("Transferência de R$" + valor + " às " + dataHoraFormatada);
+            transacao.adicionarTransacao("Transferência", valor, obterDataHoraFormatada());
             System.out.println("Transferência concluída com êxito");
         } else {
             System.out.println("Saldo insuficiente");
@@ -78,7 +78,7 @@ public class Conta {
     }
 
     // Método para obter transações
-    public List<String> obterTransacoes() {
+    public List<Transacao> obterTransacoes() {
         return transacao.getTransacoes();
     }
 

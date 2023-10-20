@@ -1,14 +1,15 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Date;
 
 public class Cliente {
     private String nome;
     private String CPF;
-    private String dataNascimento;
+    private Date dataNascimento;
     private Endereco endereco;
     private List<Conta> contas; // Lista de contas associadas ao cliente
 
-    public Cliente(String nome, String CPF, String dataNascimento, Endereco endereco){
+    public Cliente(String nome, String CPF, Date dataNascimento, Endereco endereco){
         this.nome = nome;
         this.CPF = CPF;
         this.dataNascimento = dataNascimento;
@@ -28,11 +29,11 @@ public class Cliente {
         return CPF;
     }
 
-    public String getDataNascimento() {
+    public Date getDataNascimento() {
         return dataNascimento;
     }
 
-    public void setDataNascimento(String dataNascimento) {
+    public void setDataNascimento(Date dataNascimento) {
         this.dataNascimento = dataNascimento;
     }
 

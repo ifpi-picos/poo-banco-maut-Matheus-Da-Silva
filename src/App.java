@@ -1,12 +1,15 @@
 import java.util.Scanner;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Date;
+import java.text.SimpleDateFormat;
+import java.text.ParseException;
 
 public class App {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         List<Conta> contas = new ArrayList<>();
-        Conta contaAtiva = null;
+        Conta contaAtiva = null; 
 
         while (true) {
             System.out.println("\n//-- Banco Maut --//");
@@ -38,13 +41,15 @@ public class App {
                     if (contas.isEmpty()) {
                         System.out.println("Nenhuma conta cadastrada.");
                     } else {
-                        System.out.print("Digite o número da conta que deseja ativar: ");
-                        String numeroContaAtivar = scanner.nextLine();
-                        contaAtiva = encontrarContaPorNumero(contas, numeroContaAtivar, numeroContaAtivar);
+                        System.out.print("Digite o número da agência: ");
+                        int numeroAgenciaAtivar = scanner.nextInt();
+                        System.out.print("Digite o número da conta: ");
+                        int numeroContaAtivar = scanner.nextInt();
+                        contaAtiva = encontrarContaPorNumero(contas, numeroAgenciaAtivar, numeroContaAtivar);
                         if (contaAtiva == null) {
                             System.out.println("Conta não encontrada.");
                         } else {
-                            System.out.println("Conta " + numeroContaAtivar + " ativada.");
+                            System.out.println("Conta " + numeroAgenciaAtivar + "-" + numeroContaAtivar + " ativada.");
                         }
                     }
                     break;
@@ -53,14 +58,16 @@ public class App {
                     if (contas.isEmpty()) {
                         System.out.println("Nenhuma conta cadastrada.");
                     } else {
-                        System.out.print("Digite o número da conta que deseja excluir: ");
-                        String numeroContaExcluir = scanner.nextLine();
-                        Conta contaExcluir = encontrarContaPorNumero(contas, numeroContaExcluir, numeroContaExcluir);
+                        System.out.print("Digite o número da agência: ");
+                        int numeroAgenciaExcluir = scanner.nextInt();
+                        System.out.print("Digite o número da conta: ");
+                        int numeroContaExcluir = scanner.nextInt();
+                        Conta contaExcluir = encontrarContaPorNumero(contas, numeroAgenciaExcluir, numeroContaExcluir);
                         if (contaExcluir == null) {
                             System.out.println("Conta não encontrada.");
                         } else {
                             contas.remove(contaExcluir);
-                            System.out.println("Conta " + numeroContaExcluir + " excluída com sucesso.");
+                            System.out.println("Conta " + numeroAgenciaExcluir + "-" + numeroContaExcluir + " excluída com sucesso.");
                         }
                     }
                     break;
@@ -107,9 +114,9 @@ public class App {
                     if (contaAtiva != null) {
                         System.out.println("\n//-- Transferência --//");
                         System.out.print("Número da Agência de Destino: ");
-                        String numeroAgenciaDestino = scanner.nextLine();
+                        int numeroAgenciaDestino = scanner.nextInt();
                         System.out.print("Número da Conta de Destino: ");
-                        String numeroContaDestino = scanner.nextLine();
+                        int numeroContaDestino = scanner.nextInt();
                     
                         Conta destino = encontrarContaPorNumero(contas, numeroAgenciaDestino, numeroContaDestino);
 
@@ -128,9 +135,9 @@ public class App {
                 case 9:
                     if (contaAtiva != null) {
                         System.out.println("\nExtrato de Transações:");
-                        for (String transacao : contaAtiva.obterTransacoes()) {
-                            System.out.println(transacao);
-                        }
+                    for (Transacao transacao : contaAtiva.obterTransacoes()) {
+                        System.out.println(transacao.toString());
+                    }
                     } else {
                         System.out.println("Nenhuma conta ativa. Selecione uma conta antes de prosseguir.");
                     }
@@ -143,18 +150,26 @@ public class App {
                         String novoNome = scanner.nextLine();
                         contaAtiva.getCliente().setNome(novoNome);
 
-                        System.out.print("Nova Data de Nascimento: ");
-                        String novoDataNasc = scanner.nextLine();
-                        contaAtiva.getCliente().setDataNascimento(novoDataNasc);
+                        System.out.print("Nova Data de Nascimento (dd/MM/yyyy): ");
+                        Date novoDataNasc = null;
+                        try {
+                            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                            String novoDataNascStr = scanner.nextLine();
+                            novoDataNasc = dateFormat.parse(novoDataNascStr);
+                            contaAtiva.getCliente().setDataNascimento(novoDataNasc);
+                        } catch (ParseException e) {
+                            System.out.println("Data de Nascimento inválida. Use o formato dd/MM/yyyy.");
+        }
 
                         Endereco endereco = contaAtiva.getCliente().getEndereco();
                         System.out.println("\nNovo Endereço:");
                         System.out.print("Rua: ");
                         String novaRua = scanner.nextLine();
-                        endereco.setRua(novaRua);
+                        endereco.setLogradouro(novaRua);
 
                         System.out.print("Número: ");
-                        String novoNumero = scanner.nextLine();
+                        int novoNumero = scanner.nextInt();
+                        scanner.nextLine(); // Consuma a quebra de linha
                         endereco.setNumero(novoNumero);
 
                         System.out.print("Complemento: ");
@@ -171,15 +186,7 @@ public class App {
 
                         System.out.print("Estado: ");
                         String novoEstado = scanner.nextLine();
-                        endereco.setEstado(novoEstado);
-
-                        System.out.print("País: ");
-                        String novoPais = scanner.nextLine();
-                        endereco.setPais(novoPais);
-
-                        System.out.print("CEP: ");
-                        String novoCep = scanner.nextLine();
-                        endereco.setCEP(novoCep);
+                        endereco.setUF(novoEstado);
 
                         System.out.println("Informações atualizadas com sucesso.");
                     } else {
@@ -200,33 +207,30 @@ public class App {
     }
 
     // Métodos auxiliares
-    private static Conta criarConta(Scanner scanner) {
-        System.out.println("//-- Cadastro --//");
-        System.out.print("Número da Agência: ");
-        String numeroAgencia = scanner.nextLine();
-        System.out.print("Número da Conta: ");
-        String numeroConta = scanner.nextLine();
-
-        Cliente cliente = criarCliente(scanner);
-        Conta novaConta = new Conta(numeroAgencia, numeroConta, 0, cliente);
-
-        System.out.println("Conta cadastrada com sucesso.");
-        return novaConta;
-    }
-
     private static Cliente criarCliente(Scanner scanner) {
-        System.out.print("Nome do Cliente: ");
+        System.out.print("\nNome do Cliente: ");
         String nome = scanner.nextLine();
         System.out.print("CPF: ");
         String cpf = scanner.nextLine();
-        System.out.print("Data de Nascimento: ");
-        String dataNascimento = scanner.nextLine();
+
+        Date dataNascimento = null;
+
+        try {
+        System.out.print("Data de Nascimento (dd/MM/yyyy): ");
+        String dataNascimentoStr = scanner.nextLine();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        dataNascimento = dateFormat.parse(dataNascimentoStr);
+        } catch (ParseException e) {
+        e.printStackTrace();
+        System.out.println("Data de Nascimento inválida. Use o formato dd/MM/yyyy.");
+        }
 
         System.out.print("\nEndereço do Cliente: ");
         System.out.print("\nRua: ");
         String rua = scanner.nextLine();
         System.out.print("Número: ");
-        String numero = scanner.nextLine();
+        int numero = scanner.nextInt();
+        scanner.nextLine();
         System.out.print("Complemento: ");
         String complemento = scanner.nextLine();
         System.out.print("Bairro: ");
@@ -235,20 +239,32 @@ public class App {
         String cidade = scanner.nextLine();
         System.out.print("Estado: ");
         String estado = scanner.nextLine();
-        System.out.print("País: ");
-        String pais = scanner.nextLine();
-        System.out.print("CEP: ");
-        String cep = scanner.nextLine();
 
-        Endereco endereco = new Endereco(rua, numero, complemento, bairro, cidade, estado, pais, cep);
+        Endereco endereco = new Endereco(rua, numero, complemento, bairro, cidade, estado);
         Cliente cliente = new Cliente(nome, cpf, dataNascimento, endereco);
 
         return cliente;
     }
 
-    private static Conta encontrarContaPorNumero(List<Conta> contas, String numeroAgencia, String numeroConta) {
+    private static Conta criarConta(Scanner scanner) {
+        System.out.println("//-- Cadastro --//");
+        System.out.print("Número da Agência: ");
+        int numeroAgencia = scanner.nextInt();
+        scanner.nextLine(); // Consumir o enter
+        System.out.print("Número da Conta: ");
+        int numeroConta = scanner.nextInt();
+        scanner.nextLine();
+    
+        Cliente cliente = criarCliente(scanner);
+        Conta novaConta = new Conta(numeroAgencia, numeroConta, 0, cliente);
+    
+        System.out.println("Conta cadastrada com sucesso.");
+        return novaConta;
+    }
+
+    private static Conta encontrarContaPorNumero(List<Conta> contas, int numeroAgencia, int numeroConta) {
         for (Conta conta : contas) {
-            if (conta.getNumeroAgencia().equals(numeroAgencia) && conta.getNumeroConta().equals(numeroConta)) {
+            if (conta.getNumeroAgencia() == numeroAgencia && conta.getNumeroConta() == numeroConta) {
                 return conta;
             }
         }
@@ -270,12 +286,15 @@ public class App {
         System.out.println("\nInformações do Cliente:");
         System.out.println("Nome: " + cliente.getNome());
         System.out.println("CPF: " + cliente.getCPF());
-        System.out.println("Data de Nascimento: " + cliente.getDataNascimento());
+
+        Date dataNascimento = cliente.getDataNascimento();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        String dataNascFormatada = dateFormat.format(dataNascimento);
+        System.out.println("Data de Nascimento: " + dataNascFormatada);
 
         Endereco endereco = cliente.getEndereco();
         System.out.println("\nEndereço do Cliente:");
-        System.out.println("Rua: " + endereco.getRua() + ", N°" + endereco.getNumero() + ", Complemento: " + endereco.getComplemento());
-        System.out.println("Bairro: " + endereco.getBairro() + " - Cidade: " + endereco.getCidade() + " CEP: " + endereco.getCEP());
-        System.out.println("Estado: " + endereco.getEstado() + " - País: " + endereco.getPais());
+        System.out.println("Rua: " + endereco.getLogradouro() + ", N°" + endereco.getNumero() + ", Complemento: " + endereco.getComplemento());
+        System.out.println(endereco.getBairro() + " - " + endereco.getCidade() + " - " + endereco.getUF());
     }
 }

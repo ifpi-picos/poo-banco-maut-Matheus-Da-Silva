@@ -1,37 +1,33 @@
 public class Endereco {
-    private String rua;
-    private String numero;
+    private String logradouro;
+    private int numero;
     private String complemento;
     private String bairro;
     private String cidade;
-    private String estado;
-    private String pais;
-    private String CEP;
+    private String UF;
 
-    public Endereco(String rua, String numero, String complemento, String bairro, String cidade, String estado, String pais, String CEP){
-        this.rua = rua;
+    public Endereco(String logradouro, int numero, String complemento, String bairro, String cidade, String UF){
+        this.logradouro = logradouro;
         this.numero = numero;
         this.complemento = complemento;
         this.bairro = bairro;
         this.cidade = cidade;
-        this.estado = estado;
-        this.pais = pais;
-        this.CEP = CEP;
+        this.UF = UF;
     }
 
-    public String getRua() {
-        return rua;
+    public String getLogradouro() {
+        return logradouro;
     }
 
-    public void setRua(String rua) {
-        this.rua = rua;
+    public void setLogradouro(String logradouro) {
+        this.logradouro = logradouro;
     }
 
-    public String getNumero() {
+    public int getNumero() {
         return numero;
     }
 
-    public void setNumero(String numero) {
+    public void setNumero(int numero) {
         this.numero = numero;
     }
 
@@ -59,27 +55,11 @@ public class Endereco {
         this.cidade = cidade;
     }
 
-    public String getEstado() {
-        return estado;
+    public String getUF() {
+        return UF;
     }
 
-    public void setEstado(String estado) {
-        this.estado = estado;
-    }
-
-    public String getPais() {
-        return pais;
-    }
-
-    public void setPais(String pais) {
-        this.pais = pais;
-    }
-
-    public String getCEP() {
-        return CEP;
-    }
-
-    public void setCEP(String Cep) {
-        CEP = Cep;
+    public void setUF(String UF) {
+        this.UF = UF;
     }
 }
