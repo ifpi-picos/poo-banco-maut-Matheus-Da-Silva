@@ -8,6 +8,7 @@ public class Conta {
     protected double saldo;
     private Cliente cliente; // Uma conta só pode ter um cliente associado
     protected Transacao transacao;
+    private Notificacao notificacao;
 
     public Conta(int numeroAgencia, int numeroConta, double saldo, Cliente cliente){
         this.numeroAgencia = numeroAgencia;
@@ -45,10 +46,21 @@ public class Conta {
         return cliente;
     }
 
+    public void setNotificacao(Notificacao notificacao) {
+        this.notificacao = notificacao;
+    }
+
     // Método para depositar dinheiro na conta
     public boolean depositar(double valor){
         saldo += valor;
         transacao.adicionarTransacao("Depósito", valor, obterDataHoraFormatada());
+
+        if (notificacao != null) {
+                notificacao.enviaNotificacao("Depósito", valor);
+            } else {
+                System.out.println("Nenhuma notificação configurada para a conta.");
+        }
+
         System.out.println("Depósito concluído com êxito");
         return false;
     }
@@ -58,6 +70,13 @@ public class Conta {
         if (valor <= saldo){
             saldo -= valor;
             transacao.adicionarTransacao("Saque", valor, obterDataHoraFormatada());
+
+            if (notificacao != null) {
+                notificacao.enviaNotificacao("Saque", valor);
+            } else {
+                System.out.println("Nenhuma notificação configurada para a conta.");
+            }
+
             System.out.println("Saque concluído com êxito");
         } else {
             System.out.println("Saldo insuficiente");
@@ -71,6 +90,13 @@ public class Conta {
             saldo -= valor;
             destino.depositar(valor);
             transacao.adicionarTransacao("Transferência", valor, obterDataHoraFormatada());
+
+            if (notificacao != null) {
+                notificacao.enviaNotificacao("Transferência", valor);
+            } else {
+                System.out.println("Nenhuma notificação configurada para a conta.");
+            }
+
             System.out.println("Transferência concluída com êxito");
         } else {
             System.out.println("Saldo insuficiente");
