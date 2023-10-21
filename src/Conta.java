@@ -5,9 +5,9 @@ import java.text.SimpleDateFormat;
 public class Conta {
     private int numeroAgencia;
     private int numeroConta;
-    private double saldo;
+    protected double saldo;
     private Cliente cliente; // Uma conta só pode ter um cliente associado
-    private Transacao transacao;
+    protected Transacao transacao;
 
     public Conta(int numeroAgencia, int numeroConta, double saldo, Cliente cliente){
         this.numeroAgencia = numeroAgencia;
@@ -19,7 +19,7 @@ public class Conta {
     }    
     
     // Método privado para obter a data e hora formatada
-    private String obterDataHoraFormatada() {
+    protected String obterDataHoraFormatada() {
         Date dataHoraAtual = new Date();
         SimpleDateFormat formato = new SimpleDateFormat("HH:mm - dd/MM/yyyy");
         return formato.format(dataHoraAtual);
@@ -80,10 +80,5 @@ public class Conta {
     // Método para obter transações
     public List<Transacao> obterTransacoes() {
         return transacao.getTransacoes();
-    }
-
-    // Método para limpar transações
-    public void limparTransacoes() {
-        transacao.limparTransacoes();
     }
 }
