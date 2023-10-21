@@ -35,6 +35,10 @@ public class App {
                     if (novaConta != null) {
                         contas.add(novaConta);
                     }
+
+                    // Configurar a notificações
+                    novaConta.setNotificacao(new NotificacaoEmail());
+                    novaConta.setNotificacao(new NotificacaoSMS());
                     break;
 
                 case 2:
@@ -93,6 +97,10 @@ public class App {
                         System.out.println("\n//-- Depósito --//");
                         System.out.print("Valor a depositar: R$");
                         double valorDeposito = scanner.nextDouble();
+                        
+                        Notificacao notificacaoSelecionada = escolherMeioNotificacao(scanner);
+                        contaAtiva.setNotificacao(notificacaoSelecionada);
+
                         contaAtiva.depositar(valorDeposito);
                     } else {
                         System.out.println("Nenhuma conta ativa. Selecione uma conta antes de prosseguir.");
@@ -104,6 +112,10 @@ public class App {
                         System.out.println("\n//-- Saque --//");
                         System.out.print("Valor a sacar: R$");
                         double valorSaque = scanner.nextDouble();
+                        
+                        Notificacao notificacaoSelecionada = escolherMeioNotificacao(scanner);
+                        contaAtiva.setNotificacao(notificacaoSelecionada);
+
                         contaAtiva.sacar(valorSaque);
                     } else {
                         System.out.println("Nenhuma conta ativa. Selecione uma conta antes de prosseguir.");
@@ -123,6 +135,10 @@ public class App {
                         if (destino != null) {
                             System.out.print("Valor a transferir: R$");
                             double valorTransferencia = scanner.nextDouble();
+                            
+                            Notificacao notificacaoSelecionada = escolherMeioNotificacao(scanner);
+                            contaAtiva.setNotificacao(notificacaoSelecionada);
+
                             contaAtiva.transferir(destino, valorTransferencia);
                         } else {
                             System.out.println("Conta de destino não encontrada.");
@@ -255,12 +271,36 @@ public class App {
         int numeroConta = scanner.nextInt();
         scanner.nextLine();
     
-        Cliente cliente = criarCliente(scanner);
-        Conta novaConta = new Conta(numeroAgencia, numeroConta, 0, cliente);
+        Conta novaConta = null;
     
+        System.out.println("\nEscolha o tipo de conta:");
+        System.out.println("1 - Conta Corrente");
+        System.out.println("2 - Conta Poupança");
+        System.out.print("Opção: ");
+        int tipoContaOpcao = scanner.nextInt();
+        scanner.nextLine();
+
+        Cliente cliente = criarCliente(scanner);
+    
+        if (tipoContaOpcao == 1) {
+            System.out.print("Cheque Especial: R$");
+            double chequeEspecial = scanner.nextDouble();
+            scanner.nextLine();
+            novaConta = new ContaCorrente(numeroAgencia, numeroConta, 0, chequeEspecial, cliente);
+        } else if (tipoContaOpcao == 2) {
+            novaConta = new ContaPoupanca(numeroAgencia, numeroConta, 0, 0.10, cliente);
+        } else {
+            System.out.println("Opção inválida. A conta será criada como Conta Corrente por padrão.");
+            System.out.print("Cheque Especial: R$");
+            double chequeEspecial = scanner.nextDouble();
+            scanner.nextLine();
+            novaConta = new ContaCorrente(numeroAgencia, numeroConta, 0, chequeEspecial, cliente);
+        }
+        
         System.out.println("Conta cadastrada com sucesso.");
         return novaConta;
     }
+    
 
     private static Conta encontrarContaPorNumero(List<Conta> contas, int numeroAgencia, int numeroConta) {
         for (Conta conta : contas) {
@@ -296,5 +336,24 @@ public class App {
         System.out.println("\nEndereço do Cliente:");
         System.out.println("Rua: " + endereco.getLogradouro() + ", N°" + endereco.getNumero() + ", Complemento: " + endereco.getComplemento());
         System.out.println(endereco.getBairro() + " - " + endereco.getCidade() + " - " + endereco.getUF());
+    }
+
+// Método para escolher o meio de notificação
+private static Notificacao escolherMeioNotificacao(Scanner scanner) {
+    System.out.println("\nEscolha o meio de notificação:");
+    System.out.println("1 - Email");
+    System.out.println("2 - SMS");
+    System.out.print("Opção: ");
+    int meioNotificacaoOpcao = scanner.nextInt();
+    scanner.nextLine();
+    
+    if (meioNotificacaoOpcao == 1) {
+        return new NotificacaoEmail();
+    } else if (meioNotificacaoOpcao == 2) {
+        return new NotificacaoSMS();
+    } else {
+        System.out.println("Opção inválida. Usando notificação por padrão (Email).");
+        return new NotificacaoEmail();
+    }
     }
 }
