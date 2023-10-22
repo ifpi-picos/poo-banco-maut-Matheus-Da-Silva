@@ -19,7 +19,6 @@ Nosso cliente, o Banco Maut,  solicitou um sistema financeiro para gestão de c
 - Após a criação da conta não pode-se alterar sua agência e nem seu número;
 - O CPF do cliente não pode ser alterado;
 
-OBS: As próximas etapas do projeto serão incrementadas posteriormente nesse código, ou seja, ele ainda não está finalizado.
 
 ## -> Parte 2
 
