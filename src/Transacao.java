@@ -12,7 +12,7 @@ public class Transacao {
         this.data = data;
     }
     
-    private List<Transacao> transacoes; // Altere o tipo da lista para armazenar objetos Transacao
+    private List<Transacao> transacoes; // Lista para armazenar objetos Transacao
 
     public Transacao() {
         this.transacoes = new ArrayList<>();

@@ -15,6 +15,7 @@ public class Endereco {
         this.UF = UF;
     }
 
+    //Getters e setters
     public String getLogradouro() {
         return logradouro;
     }

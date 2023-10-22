@@ -27,7 +27,7 @@ public class App {
             System.out.println("11 - Sair");
             System.out.print("\nOpção: ");
             int opcao = scanner.nextInt();
-            scanner.nextLine(); // Limpa a quebra de linha
+            scanner.nextLine(); // Consume a quebra de linha
 
             switch (opcao) {
                 case 1:
@@ -36,7 +36,7 @@ public class App {
                         contas.add(novaConta);
                     }
 
-                    // Configurar a notificações
+                    // Configurar as notificações da conta
                     novaConta.setNotificacao(new NotificacaoEmail());
                     novaConta.setNotificacao(new NotificacaoSMS());
                     break;
@@ -185,7 +185,7 @@ public class App {
 
                         System.out.print("Número: ");
                         int novoNumero = scanner.nextInt();
-                        scanner.nextLine(); // Consuma a quebra de linha
+                        scanner.nextLine(); // Consume a quebra de linha
                         endereco.setNumero(novoNumero);
 
                         System.out.print("Complemento: ");
@@ -246,7 +246,7 @@ public class App {
         String rua = scanner.nextLine();
         System.out.print("Número: ");
         int numero = scanner.nextInt();
-        scanner.nextLine();
+        scanner.nextLine(); // Consume a quebra de linha
         System.out.print("Complemento: ");
         String complemento = scanner.nextLine();
         System.out.print("Bairro: ");
@@ -266,7 +266,7 @@ public class App {
         System.out.println("//-- Cadastro --//");
         System.out.print("Número da Agência: ");
         int numeroAgencia = scanner.nextInt();
-        scanner.nextLine(); // Consumir o enter
+        scanner.nextLine(); // Consume a quebra de linha
         System.out.print("Número da Conta: ");
         int numeroConta = scanner.nextInt();
         scanner.nextLine();
@@ -338,22 +338,22 @@ public class App {
         System.out.println(endereco.getBairro() + " - " + endereco.getCidade() + " - " + endereco.getUF());
     }
 
-// Método para escolher o meio de notificação
-private static Notificacao escolherMeioNotificacao(Scanner scanner) {
-    System.out.println("\nEscolha o meio de notificação:");
-    System.out.println("1 - Email");
-    System.out.println("2 - SMS");
-    System.out.print("Opção: ");
-    int meioNotificacaoOpcao = scanner.nextInt();
-    scanner.nextLine();
-    
-    if (meioNotificacaoOpcao == 1) {
-        return new NotificacaoEmail();
-    } else if (meioNotificacaoOpcao == 2) {
-        return new NotificacaoSMS();
-    } else {
-        System.out.println("Opção inválida. Usando notificação por padrão (Email).");
-        return new NotificacaoEmail();
+    // Método para escolher o meio de notificação
+    private static Notificacao escolherMeioNotificacao(Scanner scanner) {
+        System.out.println("\nEscolha o meio de notificação:");
+        System.out.println("1 - Email");
+        System.out.println("2 - SMS");
+        System.out.print("Opção: ");
+        int meioNotificacaoOpcao = scanner.nextInt();
+        scanner.nextLine();
+        
+        if (meioNotificacaoOpcao == 1) {
+            return new NotificacaoEmail();
+        } else if (meioNotificacaoOpcao == 2) {
+            return new NotificacaoSMS();
+        } else {
+            System.out.println("Opção inválida. Usando notificação por padrão (Email).");
+            return new NotificacaoEmail();
+        }
+        }
     }
-    }
-}

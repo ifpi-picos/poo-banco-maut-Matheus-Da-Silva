@@ -14,7 +14,7 @@ public class ContaCorrente extends Conta {
             saldo -= valor;
 
             if (transferenciasRestantes > 0) {
-                destino.depositar(valor); // Destino deve receber um depósito
+                destino.depositar(valor); // Destino recebe um depósito
                 transferenciasRestantes--;
             } else {
                 double taxa = valor * 0.10; // Taxa de 10% para transferências adicionais
