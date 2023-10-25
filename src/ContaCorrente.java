@@ -24,6 +24,7 @@ public class ContaCorrente extends Conta {
             }
             
             transacao.adicionarTransacao("Transferência", valor, obterDataHoraFormatada());
+            destino.transacao.adicionarTransacao("Recebimento de Transferência", valor, obterDataHoraFormatada());
             System.out.println("Transferência concluída com êxito");
         } else {
             System.out.println("Saldo e cheque especial insuficientes");
