@@ -22,7 +22,6 @@ public class ContaPoupanca extends Conta {
     public boolean depositar(double valor) {
         double rendimentoValor = valor * rendimento;
         double valorComRendimento = valor + rendimentoValor;
-        transacao.adicionarTransacao("Depósito com Rendimento", valorComRendimento, obterDataHoraFormatada());
         return super.depositar(valorComRendimento);
     }
 
