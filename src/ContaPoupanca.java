@@ -28,10 +28,11 @@ public class ContaPoupanca extends Conta {
 
     @Override
     public void transferir(Conta destino, double valor) {
-        if (valor <= saldo) {
-            double taxa = valor * 0.10; // Taxa de 10% para transferências
-            super.sacar(taxa);
-            destino.depositar(valor - taxa);
+        double taxa = valor * 0.10; // Taxa de 10% para transferências
+        
+        if (valor > 0 && valor <= saldo) {
+            saldo -= (valor + taxa);
+            destino.saldo += (valor);
         } else {
             System.out.println("Saldo insuficiente");
         }

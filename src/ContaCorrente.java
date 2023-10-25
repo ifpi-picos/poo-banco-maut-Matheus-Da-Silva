@@ -10,16 +10,17 @@ public class ContaCorrente extends Conta {
 
     @Override
     public void transferir(Conta destino, double valor) {
+        double taxa = valor * 0.10; // Taxa de 10% para transferências adicionais
+
         if (valor > 0 && valor <= (saldo + chequeEspecial)) {
             saldo -= valor;
 
             if (transferenciasRestantes > 0) {
-                destino.depositar(valor); // Destino recebe um depósito
+                destino.saldo += valor; // Destino deve receber um depósito
                 transferenciasRestantes--;
             } else {
-                double taxa = valor * 0.10; // Taxa de 10% para transferências adicionais
-                super.sacar(taxa);
-                destino.depositar(valor - taxa); // Desconta a taxa do destino
+                saldo -= (valor + taxa);
+                destino.saldo += (valor); // Desconta a taxa do destino
             }
             
             transacao.adicionarTransacao("Transferência", valor, obterDataHoraFormatada());

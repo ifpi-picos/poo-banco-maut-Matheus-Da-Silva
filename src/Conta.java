@@ -86,9 +86,9 @@ public class Conta {
 
     // Método para transferir dinheiro para outra conta
     public void transferir(Conta destino, double valor){
-        if (valor <= saldo){
+        if (valor > 0 && valor <= saldo){
             saldo -= valor;
-            destino.depositar(valor);
+            destino.saldo += valor;
             transacao.adicionarTransacao("Transferência", valor, obterDataHoraFormatada());
 
             if (notificacao != null) {
