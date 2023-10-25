@@ -8,7 +8,7 @@ public abstract class Conta {
     protected double saldo;
     private Cliente cliente; // Uma conta só pode ter um cliente associado
     protected Transacao transacao;
-    private Notificacao notificacao;
+    protected Notificacao notificacao;
 
     public Conta(int numeroAgencia, int numeroConta, double saldo, Cliente cliente){
         this.numeroAgencia = numeroAgencia;
