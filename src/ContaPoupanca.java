@@ -33,6 +33,14 @@ public class ContaPoupanca extends Conta {
         if (valor > 0 && valor <= saldo) {
             saldo -= (valor + taxa);
             destino.saldo += (valor);
+            transacao.adicionarTransacao("Transferência", valor, obterDataHoraFormatada());
+
+            if (notificacao != null) {
+                notificacao.enviaNotificacao("Transferência", valor);
+            } else {
+                System.out.println("Nenhuma notificação configurada para a conta.");
+            }
+            
         } else {
             System.out.println("Saldo insuficiente");
         }

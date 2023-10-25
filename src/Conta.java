@@ -2,7 +2,7 @@ import java.util.List;
 import java.util.Date;
 import java.text.SimpleDateFormat;
 
-public class Conta {
+public abstract class Conta {
     private int numeroAgencia;
     private int numeroConta;
     protected double saldo;
