@@ -8,7 +8,7 @@ public class ContaPoupanca extends Conta {
 
     @Override
     public double sacar(double valor) {
-        if (valor <= saldo) {
+        if (valor > 0 && valor <= saldo) {
             double taxa = valor * 0.05; // Taxa de 5% para saques
             super.sacar(valor + taxa); 
             return valor;

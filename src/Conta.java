@@ -67,7 +67,7 @@ public class Conta {
 
     // Método para sacar dinheiro da conta
     public double sacar(double valor){
-        if (valor <= saldo){
+        if (valor > 0 && valor <= saldo){
             saldo -= valor;
             transacao.adicionarTransacao("Saque", valor, obterDataHoraFormatada());
 

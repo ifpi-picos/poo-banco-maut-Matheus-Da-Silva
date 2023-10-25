@@ -10,7 +10,7 @@ public class ContaCorrente extends Conta {
 
     @Override
     public void transferir(Conta destino, double valor) {
-        if (valor <= (saldo + chequeEspecial)) {
+        if (valor > 0 && valor <= (saldo + chequeEspecial)) {
             saldo -= valor;
 
             if (transferenciasRestantes > 0) {
