@@ -1,6 +1,6 @@
-import java.util.List;
-import java.util.Date;
 import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
 
 public abstract class Conta {
     private int numeroAgencia;
@@ -10,22 +10,24 @@ public abstract class Conta {
     protected Transacao transacao;
     protected Notificacao notificacao;
 
-    public Conta(int numeroAgencia, int numeroConta, double saldo, Cliente cliente){
+    public Conta(int numeroAgencia, int numeroConta, double saldo, Cliente cliente) {
         this.numeroAgencia = numeroAgencia;
         this.numeroConta = numeroConta;
         this.saldo = saldo;
         this.cliente = cliente;
         cliente.adicionarConta(this); // Associa a conta ao cliente
+        // eu recomendo colocar transacao como uma lista e retirar a lista de dentro da classe
+        // Transacao
         this.transacao = new Transacao(); // Inicialize o objeto de transação
-    }    
-    
+    }
+
     // Método privado para obter a data e hora formatada
     protected String obterDataHoraFormatada() {
         Date dataHoraAtual = new Date();
         SimpleDateFormat formato = new SimpleDateFormat("HH:mm - dd/MM/yyyy");
         return formato.format(dataHoraAtual);
     }
-    
+
     public Conta(String numeroAgenciaDestino, String numeroContaDestino) {
         this.transacao = new Transacao();
     }
@@ -51,14 +53,14 @@ public abstract class Conta {
     }
 
     // Método para depositar dinheiro na conta
-    public boolean depositar(double valor){
+    public boolean depositar(double valor) {
         saldo += valor;
         transacao.adicionarTransacao("Depósito", valor, obterDataHoraFormatada());
 
         if (notificacao != null) {
-                notificacao.enviaNotificacao("Depósito", valor);
-            } else {
-                System.out.println("Nenhuma notificação configurada para a conta.");
+            notificacao.enviaNotificacao("Depósito", valor);
+        } else {
+            System.out.println("Nenhuma notificação configurada para a conta.");
         }
 
         System.out.println("Depósito concluído com êxito");
@@ -66,8 +68,8 @@ public abstract class Conta {
     }
 
     // Método para sacar dinheiro da conta
-    public double sacar(double valor){
-        if (valor > 0 && valor <= saldo){
+    public double sacar(double valor) {
+        if (valor > 0 && valor <= saldo) {
             saldo -= valor;
             transacao.adicionarTransacao("Saque", valor, obterDataHoraFormatada());
 
@@ -85,12 +87,13 @@ public abstract class Conta {
     }
 
     // Método para transferir dinheiro para outra conta
-    public void transferir(Conta destino, double valor){
-        if (valor > 0 && valor <= saldo){
+    public void transferir(Conta destino, double valor) {
+        if (valor > 0 && valor <= saldo) {
             saldo -= valor;
             destino.saldo += valor;
             transacao.adicionarTransacao("Transferência", valor, obterDataHoraFormatada());
-            destino.transacao.adicionarTransacao("Recebimento de Transferência", valor, obterDataHoraFormatada());
+            destino.transacao.adicionarTransacao("Recebimento de Transferência", valor,
+                    obterDataHoraFormatada());
 
             if (notificacao != null) {
                 notificacao.enviaNotificacao("Transferência", valor);

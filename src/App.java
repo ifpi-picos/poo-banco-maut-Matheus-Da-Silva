@@ -1,15 +1,16 @@
-import java.util.Scanner;
-import java.util.List;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.text.SimpleDateFormat;
-import java.text.ParseException;
+import java.util.List;
+import java.util.Scanner;
 
 public class App {
     public static void main(String[] args) {
+        // parabéns, tudo certo.
         Scanner scanner = new Scanner(System.in);
         List<Conta> contas = new ArrayList<>();
-        Conta contaAtiva = null; 
+        Conta contaAtiva = null;
 
         while (true) {
             System.out.println("\n//-- Banco Maut --//");
@@ -49,11 +50,13 @@ public class App {
                         int numeroAgenciaAtivar = scanner.nextInt();
                         System.out.print("Digite o número da conta: ");
                         int numeroContaAtivar = scanner.nextInt();
-                        contaAtiva = encontrarContaPorNumero(contas, numeroAgenciaAtivar, numeroContaAtivar);
+                        contaAtiva = encontrarContaPorNumero(contas, numeroAgenciaAtivar,
+                                numeroContaAtivar);
                         if (contaAtiva == null) {
                             System.out.println("Conta não encontrada.");
                         } else {
-                            System.out.println("Conta " + numeroAgenciaAtivar + "-" + numeroContaAtivar + " ativada.");
+                            System.out.println("Conta " + numeroAgenciaAtivar + "-"
+                                    + numeroContaAtivar + " ativada.");
                         }
                     }
                     break;
@@ -66,12 +69,14 @@ public class App {
                         int numeroAgenciaExcluir = scanner.nextInt();
                         System.out.print("Digite o número da conta: ");
                         int numeroContaExcluir = scanner.nextInt();
-                        Conta contaExcluir = encontrarContaPorNumero(contas, numeroAgenciaExcluir, numeroContaExcluir);
+                        Conta contaExcluir = encontrarContaPorNumero(contas, numeroAgenciaExcluir,
+                                numeroContaExcluir);
                         if (contaExcluir == null) {
                             System.out.println("Conta não encontrada.");
                         } else {
                             contas.remove(contaExcluir);
-                            System.out.println("Conta " + numeroAgenciaExcluir + "-" + numeroContaExcluir + " excluída com sucesso.");
+                            System.out.println("Conta " + numeroAgenciaExcluir + "-"
+                                    + numeroContaExcluir + " excluída com sucesso.");
                         }
                     }
                     break;
@@ -80,7 +85,8 @@ public class App {
                     if (contaAtiva != null) {
                         exibirInformacoesConta(contaAtiva);
                     } else {
-                        System.out.println("Nenhuma conta ativa. Selecione uma conta antes de prosseguir.");
+                        System.out.println(
+                                "Nenhuma conta ativa. Selecione uma conta antes de prosseguir.");
                     }
                     break;
 
@@ -88,7 +94,8 @@ public class App {
                     if (contaAtiva != null) {
                         System.out.println("\nSaldo: R$" + contaAtiva.getSaldo());
                     } else {
-                        System.out.println("Nenhuma conta ativa. Selecione uma conta antes de prosseguir.");
+                        System.out.println(
+                                "Nenhuma conta ativa. Selecione uma conta antes de prosseguir.");
                     }
                     break;
 
@@ -97,13 +104,14 @@ public class App {
                         System.out.println("\n//-- Depósito --//");
                         System.out.print("Valor a depositar: R$");
                         double valorDeposito = scanner.nextDouble();
-                        
+
                         Notificacao notificacaoSelecionada = escolherMeioNotificacao(scanner);
                         contaAtiva.setNotificacao(notificacaoSelecionada);
 
                         contaAtiva.depositar(valorDeposito);
                     } else {
-                        System.out.println("Nenhuma conta ativa. Selecione uma conta antes de prosseguir.");
+                        System.out.println(
+                                "Nenhuma conta ativa. Selecione uma conta antes de prosseguir.");
                     }
                     break;
 
@@ -112,13 +120,14 @@ public class App {
                         System.out.println("\n//-- Saque --//");
                         System.out.print("Valor a sacar: R$");
                         double valorSaque = scanner.nextDouble();
-                        
+
                         Notificacao notificacaoSelecionada = escolherMeioNotificacao(scanner);
                         contaAtiva.setNotificacao(notificacaoSelecionada);
 
                         contaAtiva.sacar(valorSaque);
                     } else {
-                        System.out.println("Nenhuma conta ativa. Selecione uma conta antes de prosseguir.");
+                        System.out.println(
+                                "Nenhuma conta ativa. Selecione uma conta antes de prosseguir.");
                     }
                     break;
 
@@ -129,13 +138,14 @@ public class App {
                         int numeroAgenciaDestino = scanner.nextInt();
                         System.out.print("Número da Conta de Destino: ");
                         int numeroContaDestino = scanner.nextInt();
-                    
-                        Conta destino = encontrarContaPorNumero(contas, numeroAgenciaDestino, numeroContaDestino);
+
+                        Conta destino = encontrarContaPorNumero(contas, numeroAgenciaDestino,
+                                numeroContaDestino);
 
                         if (destino != null) {
                             System.out.print("Valor a transferir: R$");
                             double valorTransferencia = scanner.nextDouble();
-                            
+
                             Notificacao notificacaoSelecionada = escolherMeioNotificacao(scanner);
                             contaAtiva.setNotificacao(notificacaoSelecionada);
 
@@ -144,18 +154,20 @@ public class App {
                             System.out.println("Conta de destino não encontrada.");
                         }
                     } else {
-                        System.out.println("Nenhuma conta ativa. Selecione uma conta antes de prosseguir.");
+                        System.out.println(
+                                "Nenhuma conta ativa. Selecione uma conta antes de prosseguir.");
                     }
                     break;
 
                 case 9:
                     if (contaAtiva != null) {
                         System.out.println("\nExtrato de Transações:");
-                    for (Transacao transacao : contaAtiva.obterTransacoes()) {
-                        System.out.println(transacao.toString());
-                    }
+                        for (Transacao transacao : contaAtiva.obterTransacoes()) {
+                            System.out.println(transacao.toString());
+                        }
                     } else {
-                        System.out.println("Nenhuma conta ativa. Selecione uma conta antes de prosseguir.");
+                        System.out.println(
+                                "Nenhuma conta ativa. Selecione uma conta antes de prosseguir.");
                     }
                     break;
 
@@ -174,8 +186,9 @@ public class App {
                             novoDataNasc = dateFormat.parse(novoDataNascStr);
                             contaAtiva.getCliente().setDataNascimento(novoDataNasc);
                         } catch (ParseException e) {
-                            System.out.println("Data de Nascimento inválida. Use o formato dd/MM/yyyy.");
-        }
+                            System.out.println(
+                                    "Data de Nascimento inválida. Use o formato dd/MM/yyyy.");
+                        }
 
                         Endereco endereco = contaAtiva.getCliente().getEndereco();
                         System.out.println("\nNovo Endereço:");
@@ -206,7 +219,8 @@ public class App {
 
                         System.out.println("Informações atualizadas com sucesso.");
                     } else {
-                        System.out.println("Nenhuma conta ativa. Selecione uma conta antes de prosseguir.");
+                        System.out.println(
+                                "Nenhuma conta ativa. Selecione uma conta antes de prosseguir.");
                     }
                     break;
 
@@ -232,13 +246,13 @@ public class App {
         Date dataNascimento = null;
 
         try {
-        System.out.print("Data de Nascimento (dd/MM/yyyy): ");
-        String dataNascimentoStr = scanner.nextLine();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        dataNascimento = dateFormat.parse(dataNascimentoStr);
+            System.out.print("Data de Nascimento (dd/MM/yyyy): ");
+            String dataNascimentoStr = scanner.nextLine();
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            dataNascimento = dateFormat.parse(dataNascimentoStr);
         } catch (ParseException e) {
-        e.printStackTrace();
-        System.out.println("Data de Nascimento inválida. Use o formato dd/MM/yyyy.");
+            e.printStackTrace();
+            System.out.println("Data de Nascimento inválida. Use o formato dd/MM/yyyy.");
         }
 
         System.out.print("\nEndereço do Cliente: ");
@@ -270,9 +284,9 @@ public class App {
         System.out.print("Número da Conta: ");
         int numeroConta = scanner.nextInt();
         scanner.nextLine();
-    
+
         Conta novaConta = null;
-    
+
         System.out.println("\nEscolha o tipo de conta:");
         System.out.println("1 - Conta Corrente");
         System.out.println("2 - Conta Poupança");
@@ -281,7 +295,7 @@ public class App {
         scanner.nextLine();
 
         Cliente cliente = criarCliente(scanner);
-    
+
         if (tipoContaOpcao == 1) {
             System.out.print("Cheque Especial: R$");
             double chequeEspecial = scanner.nextDouble();
@@ -290,21 +304,24 @@ public class App {
         } else if (tipoContaOpcao == 2) {
             novaConta = new ContaPoupanca(numeroAgencia, numeroConta, 0, 0.10, cliente);
         } else {
-            System.out.println("Opção inválida. A conta será criada como Conta Corrente por padrão.");
+            System.out
+                    .println("Opção inválida. A conta será criada como Conta Corrente por padrão.");
             System.out.print("Cheque Especial: R$");
             double chequeEspecial = scanner.nextDouble();
             scanner.nextLine();
             novaConta = new ContaCorrente(numeroAgencia, numeroConta, 0, chequeEspecial, cliente);
         }
-        
+
         System.out.println("Conta cadastrada com sucesso.");
         return novaConta;
     }
-    
 
-    private static Conta encontrarContaPorNumero(List<Conta> contas, int numeroAgencia, int numeroConta) {
+
+    private static Conta encontrarContaPorNumero(List<Conta> contas, int numeroAgencia,
+            int numeroConta) {
         for (Conta conta : contas) {
-            if (conta.getNumeroAgencia() == numeroAgencia && conta.getNumeroConta() == numeroConta) {
+            if (conta.getNumeroAgencia() == numeroAgencia
+                    && conta.getNumeroConta() == numeroConta) {
                 return conta;
             }
         }
@@ -334,8 +351,10 @@ public class App {
 
         Endereco endereco = cliente.getEndereco();
         System.out.println("\nEndereço do Cliente:");
-        System.out.println("Rua: " + endereco.getLogradouro() + ", N°" + endereco.getNumero() + ", Complemento: " + endereco.getComplemento());
-        System.out.println(endereco.getBairro() + " - " + endereco.getCidade() + " - " + endereco.getUF());
+        System.out.println("Rua: " + endereco.getLogradouro() + ", N°" + endereco.getNumero()
+                + ", Complemento: " + endereco.getComplemento());
+        System.out.println(
+                endereco.getBairro() + " - " + endereco.getCidade() + " - " + endereco.getUF());
     }
 
     // Método para escolher o meio de notificação
@@ -346,7 +365,7 @@ public class App {
         System.out.print("Opção: ");
         int meioNotificacaoOpcao = scanner.nextInt();
         scanner.nextLine();
-        
+
         if (meioNotificacaoOpcao == 1) {
             return new NotificacaoEmail();
         } else if (meioNotificacaoOpcao == 2) {
@@ -355,5 +374,5 @@ public class App {
             System.out.println("Opção inválida. Usando notificação por padrão (Email).");
             return new NotificacaoEmail();
         }
-        }
     }
+}
